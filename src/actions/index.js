@@ -66,7 +66,7 @@ export function getTutorials() {
   return (dispatch, getState) => {
     dispatch(requestContents())
 
-    return fetch('http://dev.contenta.test/api/tutorials')
+    return fetch('http://dev.contenta.test/api/tutorials?include=image,image.field_image,contentType&fields[images]=imageFile')
             .then(res => res.json())
             .then(data => dispatch(receiveContents(data)))
             .then(() => console.log('-Store state-', getState()))

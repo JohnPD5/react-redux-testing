@@ -40,7 +40,6 @@ app.get('*/', (req, res) => {
         </Provider>
       );
   
-      // Save the current page in the store
       store.dispatch(getCurrentPage(req.url));
   
       const html = renderToString(jsx);
