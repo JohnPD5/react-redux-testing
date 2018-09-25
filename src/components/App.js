@@ -5,7 +5,7 @@ import Nav from './Nav';
 import routes from '../routes';
 
 class App extends Component {
-  createRoutes() {
+  generalRoutes() {
     return routes.map(route => {
       return <Route exact key={route.path} path={route.path} component={route.component} />
     });
@@ -17,7 +17,7 @@ class App extends Component {
         <h2>Try hard</h2>
         <Nav />
         <Switch>
-          {this.createRoutes()}
+          {this.generalRoutes()}
         </Switch>
       </div>
     );

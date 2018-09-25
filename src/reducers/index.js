@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { GET_CURRENT_PAGE, INIT_SESSION, STORE_DATA } from '../actions/index';
+import { GET_CURRENT_PAGE, INIT_SESSION, } from '../actions/index';
 import { currentContent } from './reducer_content';
 
 export function initSession(state = {}, action) {
@@ -26,7 +26,7 @@ export function currentPage(state = {}, action) {
 const rootReducer = combineReducers({
   loggedIn: initSession,
   currentPage: currentPage,
-  pageContent: currentContent
+  contents: currentContent
 });
 
 export default rootReducer;

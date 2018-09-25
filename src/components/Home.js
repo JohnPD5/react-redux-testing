@@ -6,9 +6,11 @@ import { getRecipes, getCurrentPage } from '../actions/index';
 
 class Home extends Component {
   componentDidMount() {
-    console.log('-componentDidMount-');
-    this.props.getRecipes();
     this.props.getCurrentPage(this.props.location.pathname);
+
+    if(this.props.data.length == 0) {
+      this.props.getRecipes();
+    }
   }
 
   mergeData(main, extras) {
@@ -43,7 +45,7 @@ class Home extends Component {
     return contents.map(content => {
       return(
         <li key={content.mainContent.id}>
-          <h3>{content.mainContent.attributes.title}</h3>
+          <a href={content.mainContent.links.self}>{content.mainContent.attributes.title}</a>
           <img src={`http://dev.contenta.test` + content.imageUrl} />
         </li>
       );
@@ -51,8 +53,9 @@ class Home extends Component {
   }
 
   render() {
-    if(this.props.isFetching || this.props.includedContent == null) { return  <div><h2>Fetching..</h2></div> }
-    const contentsInfo = this.mergeData(this.props.content, this.props.includedContent);
+    if(this.props.isFetching || this.props.included == null) { return  <div><h2>Fetching..</h2></div> }
+
+    const contentsInfo = this.mergeData(this.props.data, this.props.included);
 
     return(
       <div>
@@ -67,9 +70,8 @@ class Home extends Component {
 
 Home.serverFetch = getRecipes;
 
-function mapStateToProps(state) {
-  console.log('-mapStateToProps-', state);
-  return state.pageContent;
+function mapStateToProps(state, ownProps) {
+  return state.contents.recipes;
 }
 
 const mapDispatchToProps = { getRecipes, getCurrentPage };

@@ -5,15 +5,17 @@ import { getCurrentPage, getTutorials } from '../actions/index';
 
 class Portfolio extends Component {
   componentDidMount() {
-    console.log('-componentDidMount-');
-    this.props.getTutorials();
     this.props.getCurrentPage(this.props.location.pathname);
+
+    if(this.props.data == undefined) {
+      this.props.getTutorials();
+    }
   }
 
-  showList(list) {
-    return list.map(item => {
+  showContent(contents) {
+    return contents.map(item => {
       return(
-        <li key={item.id}>{item.attributes.title}</li>
+        <li key={item.main.id}>{item.main.attributes.title}</li>
       );
     })
   }
@@ -57,17 +59,15 @@ class Portfolio extends Component {
   }
 
   render() {
-    const pageContent = this.props.content;
-    if(this.props.isFetching || this.props.includedContent == null) { return <div><h2>Fetching..</h2></div> }
+    if(this.props.isFetching || this.props.included == null) { return <div><h2>Fetching..</h2></div> }
 
-    const contentsInfo = this.mergeData(pageContent, this.props.includedContent, ['image', 'contentType']);
-    // console.log(contentsInfo);
+    const contentsInfo = this.mergeData(this.props.data, this.props.included, ['image', 'contentType']);
 
     return(
       <div>
         <h1>Portfolio</h1>
         <ul>
-          {this.showList(pageContent)}
+          {this.showContent(contentsInfo)}
         </ul>
       </div>
     );
@@ -77,9 +77,9 @@ class Portfolio extends Component {
 Portfolio.serverFetch = getTutorials;
 
 function mapStateToProps(state, ownProps) {
-  console.log('--state--', state);
-  console.log('--ownProps', ownProps);
-  return state.pageContent;
+  return { 
+    ...state.contents.tutorials
+  };
 }
 
 const mapDispatchToProps = { getCurrentPage, getTutorials };

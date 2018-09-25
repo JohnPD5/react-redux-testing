@@ -25,8 +25,9 @@ export function requestContents() {
   }
 }
 
-export function receiveContents(data) {
+export function receiveContents(data, dataLabel) {
   let includedData;
+  
   if(!data.included) {
     includedData = null;
   } else {
@@ -35,7 +36,8 @@ export function receiveContents(data) {
 
   const payloadData = {
     data: data.data,
-    included: includedData
+    included: includedData,
+    label: dataLabel || undefined
   };
 
   return (dispatch) => {
@@ -46,7 +48,7 @@ export function receiveContents(data) {
 export function storeData(data) {
   return {
     type: data.type,
-    payload: data.payload
+    payload: data.payload,
   }
 }
 
@@ -56,7 +58,7 @@ export function getRecipes() {
 
     return fetch('http://dev.contenta.test/api/recipes?include=field_image,field_image.imageFile&fields[images]=imageFile')
             .then(res => res.json())
-            .then(data => dispatch(receiveContents(data)))
+            .then(data => dispatch(receiveContents(data, 'recipes')))
             .then(() => console.log('-Store state-', getState()))
             .catch(error => console.log(error))
   }
@@ -68,7 +70,7 @@ export function getTutorials() {
 
     return fetch('http://dev.contenta.test/api/tutorials?include=image,image.field_image,contentType&fields[images]=imageFile')
             .then(res => res.json())
-            .then(data => dispatch(receiveContents(data)))
+            .then(data => dispatch(receiveContents(data, 'tutorials')))
             .then(() => console.log('-Store state-', getState()))
             .catch(error => console.log(error))
   }

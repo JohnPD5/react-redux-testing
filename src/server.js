@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import path from 'path';
 import express from 'express';
+import cors from 'cors';
 import React from 'react';
 import bodyParser from 'body-parser';
 import { renderToString } from "react-dom/server";
@@ -15,6 +16,7 @@ import { getCurrentPage, initializeSession } from './actions/index';
 const port = process.env.PORT || 3000;
 const app = express();
 
+app.use(cors({origin: 'http://dev.contenta.test'}));
 app.use(express.static('build'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const store = createStore();
 store.dispatch(initializeSession());
 
-app.get('*/', (req, res) => {
+app.get('/*', (req, res) => {
     const context = {};
 
     const dataRequirements = 
@@ -39,7 +41,7 @@ app.get('*/', (req, res) => {
           </StaticRouter>
         </Provider>
       );
-  
+        
       store.dispatch(getCurrentPage(req.url));
   
       const html = renderToString(jsx);
