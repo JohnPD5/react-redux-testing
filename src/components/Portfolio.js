@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getCurrentPage, getTutorials } from '../actions/index';
+import { getCurrentPage } from '../actions/index';
+import { getTutorials } from '../actions/apis';
 
 class Portfolio extends Component {
   componentDidMount() {
@@ -20,6 +21,7 @@ class Portfolio extends Component {
     })
   }
 
+  // Merge the data and the included data from JSON API
   mergeData(data, extras, fields=[]) {
     let mergedData = [];
 
@@ -77,9 +79,7 @@ class Portfolio extends Component {
 Portfolio.serverFetch = getTutorials;
 
 function mapStateToProps(state, ownProps) {
-  return { 
-    ...state.contents.tutorials
-  };
+  return {...state.contents.tutorials};
 }
 
 const mapDispatchToProps = { getCurrentPage, getTutorials };

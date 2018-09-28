@@ -5,7 +5,9 @@ import routes from '../routes';
 class Nav extends Component {
   showLinks() {
     return routes.map(link => {
-      return <Link key={link.path} to={link.path}>{link.name}</Link>
+      if(link.nav) {
+        return <Link key={link.path} to={link.path}>{link.name}</Link>
+      }
     })
   }
 

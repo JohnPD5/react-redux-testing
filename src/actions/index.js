@@ -25,17 +25,17 @@ export function requestContents() {
   }
 }
 
-export function receiveContents(data, dataLabel) {
+export function receiveContents(fetched_data, dataLabel) {
   let includedData;
   
-  if(!data.included) {
+  if(!fetched_data.included) {
     includedData = null;
   } else {
-    includedData = data.included;
+    includedData = fetched_data.included;
   }
 
   const payloadData = {
-    data: data.data,
+    data: fetched_data.data,
     included: includedData,
     label: dataLabel || undefined
   };
@@ -45,33 +45,9 @@ export function receiveContents(data, dataLabel) {
   }
 }
 
-export function storeData(data) {
+export function storeData(clean_data) {
   return {
-    type: data.type,
-    payload: data.payload,
-  }
-}
-
-export function getRecipes() {
-  return (dispatch, getState) => {
-    dispatch(requestContents())
-
-    return fetch('http://dev.contenta.test/api/recipes?include=field_image,field_image.imageFile&fields[images]=imageFile')
-            .then(res => res.json())
-            .then(data => dispatch(receiveContents(data, 'recipes')))
-            .then(() => console.log('-Store state-', getState()))
-            .catch(error => console.log(error))
-  }
-}
-
-export function getTutorials() {
-  return (dispatch, getState) => {
-    dispatch(requestContents())
-
-    return fetch('http://dev.contenta.test/api/tutorials?include=image,image.field_image,contentType&fields[images]=imageFile')
-            .then(res => res.json())
-            .then(data => dispatch(receiveContents(data, 'tutorials')))
-            .then(() => console.log('-Store state-', getState()))
-            .catch(error => console.log(error))
+    type: clean_data.type,
+    payload: clean_data.payload,
   }
 }

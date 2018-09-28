@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
 import fetch from "isomorphic-fetch";
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { getRecipes, getCurrentPage } from '../actions/index';
+import { getCurrentPage } from '../actions/index';
+import { getRecipes } from '../actions/apis';
 
 class Home extends Component {
   componentDidMount() {
@@ -45,7 +47,9 @@ class Home extends Component {
     return contents.map(content => {
       return(
         <li key={content.mainContent.id}>
-          <a href={content.mainContent.links.self}>{content.mainContent.attributes.title}</a>
+          <Link key={content.mainContent.id} to={`/recipe/${content.mainContent.id}`}>
+            {content.mainContent.attributes.title}
+          </Link>
           <img src={`http://dev.contenta.test` + content.imageUrl} />
         </li>
       );
@@ -54,6 +58,7 @@ class Home extends Component {
 
   render() {
     if(this.props.isFetching || this.props.included == null) { return  <div><h2>Fetching..</h2></div> }
+    console.log(this.props);  
 
     const contentsInfo = this.mergeData(this.props.data, this.props.included);
 
@@ -71,7 +76,7 @@ class Home extends Component {
 Home.serverFetch = getRecipes;
 
 function mapStateToProps(state, ownProps) {
-  return state.contents.recipes;
+  return {...state.contents.recipes};
 }
 
 const mapDispatchToProps = { getRecipes, getCurrentPage };

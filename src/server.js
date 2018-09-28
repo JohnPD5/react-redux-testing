@@ -16,7 +16,7 @@ import { getCurrentPage, initializeSession } from './actions/index';
 const port = process.env.PORT || 3000;
 const app = express();
 
-app.use(cors({origin: 'http://dev.contenta.test'}));
+app.use(cors());
 app.use(express.static('build'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,6 +24,35 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const store = createStore();
 store.dispatch(initializeSession());
 
+// Testing url parameters
+app.get('/:nid/:id', (req, res) => {
+    const context = {};
+
+    const dataRequirements = 
+    routes.filter(route => matchPath(req.url, route.path))
+            .map(route => route.component)
+            .filter(comp => comp.serverFetch)
+            .map(comp => store.dispatch(comp.serverFetch()));
+    
+    Promise.all(dataRequirements).then(() => {
+        const jsx = (
+            <Provider store={store}>
+              <StaticRouter context={context} location={req.path}>
+                <App />
+              </StaticRouter>
+            </Provider>
+        );
+
+        store.dispatch(getCurrentPage(req.url));
+    
+        const html = renderToString(jsx);
+        const reduxState = store.getState();
+
+        res.send(htmlTemplate(html, reduxState));
+    }) 
+});
+
+// General route
 app.get('/*', (req, res) => {
     const context = {};
 
@@ -41,15 +70,19 @@ app.get('/*', (req, res) => {
           </StaticRouter>
         </Provider>
       );
-        
+    
       store.dispatch(getCurrentPage(req.url));
   
       const html = renderToString(jsx);
       const reduxState = store.getState();
-  
+
       res.writeHead(200, {"Content-Type": "text/html"});
       res.end(htmlTemplate(html, reduxState));
     })
+});
+
+app.listen(port, () => {
+    console.log(`Running on Port ${port}`);
 });
 
 function htmlTemplate(html, preloadedState) {
@@ -66,12 +99,8 @@ function htmlTemplate(html, preloadedState) {
             <script>
             window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
             </script>
-            <script src="./client_bundle.js"></script>
+            <script src="../client_bundle.js"></script>
         </body>
         </html>
     `);
 }  
-
-app.listen(port, () => {
-    console.log(`Running on Port ${port}`);
-});
