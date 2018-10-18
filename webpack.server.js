@@ -1,5 +1,6 @@
 const path = require('path');
 const webpackNodeExternals = require('webpack-node-externals');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     // Inform webpack that we're building a bundle
@@ -32,10 +33,20 @@ module.exports = {
                     ]
                 } 
             },
+            {
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract({
+                    use: ['css-loader'],
+                    fallback: 'style-loader'
+                })
+            },
         ]
     },
 
     // Tell webpack not to bundle any libraries that exist in the 'node_modules' folder
     // into the server bundle
-    externals: [webpackNodeExternals()]
+    externals: [webpackNodeExternals()],
+    plugins: [
+        new ExtractTextPlugin({filename: 'main.css'})
+    ]
 };

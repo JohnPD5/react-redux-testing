@@ -1,29 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { TweenMax, CSSPlugin, TimelineMax } from 'gsap';
 
 import { getCurrentPage } from '../actions/index';
 import { getRecipes } from '../actions/apis';
+import Ingredients from '../components/Ingredients';
 
 class ShowRecipe extends Component {
-  showIngredients(list) {
-    let i = 0;
+  constructor(props) {
+    super(props);
+    this.el = null;
+    this.animation = new TimelineMax();
+  }
 
-    return list.map(item => {
-      let iKey = `ing-${i}`;
-      i++;
-
-      return <li key={iKey}>{item}</li>
-    });
+  componentDidMount() { 
+    this.animation.to(this.el, .2, {opacity: 1, height: 'auto'})
+                  .to(this.el, .5, {y: '0%'});
   }
 
   render() {
+    if(this.props.data == undefined) { return false; }
+    
     const content = this.props.data;
     const ingredients = content.attributes.ingredients;
 
     return(
       <div id="recipe">
-        <ul>
-          {this.showIngredients(ingredients)}
+        {/*Assegno l'elemento <ul> a this.el*/}
+        <ul className="ingredients" ref={self => this.el = self}>
+          <Ingredients ingredients={ingredients} />
         </ul>
       </div>
     );

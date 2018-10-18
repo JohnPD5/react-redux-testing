@@ -21,6 +21,10 @@ class Portfolio extends Component {
     })
   }
 
+  componentWillUnmount() {
+    console.log('-Unmounting Portfolio-');
+  }
+
   // Merge the data and the included data from JSON API
   mergeData(data, extras, fields=[]) {
     let mergedData = [];

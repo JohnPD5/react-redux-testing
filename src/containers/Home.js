@@ -1,18 +1,26 @@
 import fetch from "isomorphic-fetch";
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import { getCurrentPage } from '../actions/index';
 import { getRecipes } from '../actions/apis';
+import NavLink from '../components/NavLink';
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
     this.props.getCurrentPage(this.props.location.pathname);
 
-    if(this.props.data.length == 0) {
+    if(this.props.recipes == 0) {
       this.props.getRecipes();
     }
+  }
+
+  componentWillUnmount() {
+    console.log('-Unmounting Home-');
   }
 
   mergeData(main, extras) {
@@ -43,22 +51,8 @@ class Home extends Component {
     return mergedData;
   }
 
-  showContent(contents) {
-    return contents.map(content => {
-      return(
-        <li key={content.mainContent.id}>
-          <Link key={content.mainContent.id} to={`/recipe/${content.mainContent.id}`}>
-            {content.mainContent.attributes.title}
-          </Link>
-          <img src={`http://dev.contenta.test` + content.imageUrl} />
-        </li>
-      );
-    })
-  }
-
   render() {
     if(this.props.isFetching || this.props.included == null) { return  <div><h2>Fetching..</h2></div> }
-    console.log(this.props);  
 
     const contentsInfo = this.mergeData(this.props.data, this.props.included);
 
@@ -66,7 +60,7 @@ class Home extends Component {
       <div>
         <h1>Home</h1>
         <ul>
-         {this.showContent(contentsInfo)}
+          <NavLink content={contentsInfo} />
         </ul>
       </div>
     );

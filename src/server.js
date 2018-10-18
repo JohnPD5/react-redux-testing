@@ -8,7 +8,8 @@ import { renderToString } from "react-dom/server";
 import { Provider } from 'react-redux';
 import { StaticRouter, matchPath } from 'react-router-dom';
 
-import App from './components/App';
+import '../public/css/main.css';
+import App from './containers/App';
 import createStore from './store';
 import routes from './routes';
 import { getCurrentPage, initializeSession } from './actions/index';
@@ -92,6 +93,8 @@ function htmlTemplate(html, preloadedState) {
         <head>
             <meta charset="utf-8">
             <title>React SSR - BASE</title>
+            <base href="/">
+            <link rel="stylesheet" type="text/css" href="./main.css">
         </head>
 
         <body>

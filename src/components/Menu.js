@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+
 import routes from '../routes';
 
-class Nav extends Component {
+class Menu extends Component {
   showLinks() {
     return routes.map(link => {
       if(link.nav) {
@@ -13,7 +14,7 @@ class Nav extends Component {
 
   render() {
     return(
-      <div>
+      <div className="menu">
         <h2>Nav</h2>
         {this.showLinks()}
       </div>
@@ -21,4 +22,4 @@ class Nav extends Component {
   }
 }
 
-export default Nav;
+export default Menu;

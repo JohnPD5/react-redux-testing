@@ -1,6 +1,6 @@
-import Home from './components/Home';
-import Portfolio from './components/Portfolio';
-import ShowRecipe from './components/showRecipe';
+import Home from './containers/Home';
+import Portfolio from './containers/Portfolio';
+import ShowRecipe from './containers/ShowRecipe';
 
 export default [
   {
