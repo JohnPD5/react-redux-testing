@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import { TweenMax, CSSPlugin, TimelineMax } from 'gsap';
 
 import Menu from '../components/Menu';
+import Overlay from '../components/Overlay';
 import routes from '../routes';
-import { hide, scaleDown, scaleUp, show } from '../animations/animate';
+import { showEnter, hideExit } from '../animations/animate';
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class App extends Component {
   
   generalRoutes() {
     return routes.map(route => {
-      return <Route exact key={route.path} path={route.path} component={route.component} />
+      return <Route exact key={route.path} path={route.path} component={route.component} />;
     });
   }
 
@@ -23,31 +24,22 @@ class App extends Component {
     return(
       <div className="transitionGroup__wrapper">
         <h2>Try hard</h2>
-        <Menu />
-        
-        {/*                 
-        <Route render={({location}) => (
+        <Menu />     
 
+        <Route render={({location}) => (
           <TransitionGroup>
             <CSSTransition
               key={location.pathname}
-              classNames="pages"
-              timeout={300}
+              classNames="fade"
+              timeout={450}
               mountOnEnter={true}
               unmountOnExit={true}>
-
               <Switch location={location}>
                 {this.generalRoutes()}
               </Switch>
-    
             </CSSTransition>
           </TransitionGroup>
-
-        )} /> */}
-
-        <Switch>
-          {this.generalRoutes()}
-        </Switch>
+        )} />
       </div>
     );
   }

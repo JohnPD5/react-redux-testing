@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { CSSTransition, TransitionGroup, Transition } from 'react-transition-group';
 
 import { getCurrentPage } from '../actions/index';
 import { getTutorials } from '../actions/apis';
+import { mergeDataWithFields } from '../utils';
+import Loader from '../components/Loader';
+import Overlay from '../components/Overlay';
 
 class Portfolio extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
     this.props.getCurrentPage(this.props.location.pathname);
 
@@ -25,56 +33,21 @@ class Portfolio extends Component {
     console.log('-Unmounting Portfolio-');
   }
 
-  // Merge the data and the included data from JSON API
-  mergeData(data, extras, fields=[]) {
-    let mergedData = [];
-
-    data.forEach(item => {
-      let included = {};
-      if(item.relationships == undefined) { return null; }
-
-      fields.forEach(field => {
-        let firstRelationID = item.relationships[field].data.id;
-
-        extras.forEach(extra => {
-          if(extra.id == firstRelationID) {
-            if(extra.relationships !== undefined) {
-              for(let prop in extra.relationships) {
-                let secondRelationID = extra.relationships[prop].data.id;
-                
-                return extras.forEach(file => {
-                  if(file.id == secondRelationID) {
-                    included[field] = file.attributes;
-                  }
-                });
-              }
-            } else {
-              return included[field] = extra.attributes;
-            }
-          }
-        })
-      })
-
-      return mergedData.push({
-        main: item,
-        extra: included
-      });
-    });
-
-    return mergedData;
-  }
-
   render() {
-    if(this.props.isFetching || this.props.included == null) { return <div><h2>Fetching..</h2></div> }
+    if(this.props.isFetching || this.props.included == null ) {
+      return <Loader />;
+    }
 
-    const contentsInfo = this.mergeData(this.props.data, this.props.included, ['image', 'contentType']);
-
+    const contentsInfo = mergeDataWithFields(this.props.data, this.props.included, ['image', 'contentType']);
+    
     return(
-      <div>
-        <h1>Portfolio</h1>
-        <ul>
-          {this.showContent(contentsInfo)}
-        </ul>
+      <div ref={this.portfolio} className="portfolio__wrapper">
+        <div>
+          <h1>Portfolio</h1>
+          <ul>
+            {this.showContent(contentsInfo)}
+          </ul>
+        </div> 
       </div>
     );
   }

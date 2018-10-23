@@ -6,7 +6,6 @@ const Ingredients = (props) => {
   return props.ingredients.map(item => {
     let iKey = `ing-${i}`;
     i++;
-
     return <li key={iKey}>{item}</li>
   });
 }

@@ -1,21 +1,11 @@
 import { TweenMax, CSSPlugin, TimelineMax } from 'gsap';
 
-export function show(el) {
+export function showEnter(el) {
   const myTween = new TimelineMax();
-  myTween.to(el, 3, {opacity: 1});
+  myTween.to(el, 1, {opacity: 1});
 }
 
-export function hide(el) {
+export function hideExit(el) {
   const myTween = new TimelineMax();
-  myTween.to(el, 3, {opacity: 0});
-}
-
-export function scaleDown(el) {
-  const myTween = new TimelineMax();
-  myTween.to(el, 3, {scale: 0.5});
-}
-
-export function scaleUp(el) {
-  const myTween = new TimelineMax();
-  myTween.to(el, 3, {scale: 1});
+  myTween.to(el, 1, {opacity: 0});
 }

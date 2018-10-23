@@ -6,9 +6,9 @@ const NavLink = ({content}) => {
     return(
       <li key={item.mainContent.id}>
         <Link key={item.mainContent.id} to={`/recipe/${item.mainContent.id}`}>
-          {item.mainContent.attributes.title}
+          <span>{item.mainContent.attributes.title}</span>
+          <img className="recipe-image" src={`http://dev.contenta.test` + item.imageUrl} />
         </Link>
-        <img src={`http://dev.contenta.test` + item.imageUrl} />
       </li>
     );
   })

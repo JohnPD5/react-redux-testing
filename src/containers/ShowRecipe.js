@@ -14,12 +14,12 @@ class ShowRecipe extends Component {
   }
 
   componentDidMount() { 
-    this.animation.to(this.el, .2, {opacity: 1, height: 'auto'})
+    this.animation.to(this.el, .5, {opacity: 1, height: 'auto'})
                   .to(this.el, .5, {y: '0%'});
   }
 
   render() {
-    if(this.props.data == undefined) { return false; }
+    if(this.props.data == undefined) { return <Loader />; }
     
     const content = this.props.data;
     const ingredients = content.attributes.ingredients;
@@ -38,17 +38,14 @@ class ShowRecipe extends Component {
 ShowRecipe.serverFetch = getRecipes;
 
 function mapStateToProps(state, ownProps) {
-  // Get all recipes
-  const recipes = state.contents.recipes.data;
+  const recipes = state.contents.recipes.data; 
 
-  // Find the recipe that i need
   const recipe = recipes.find(recipe => {
     if(recipe.id == ownProps.match.params.id) {
       return recipe;
     }
   })
   
-  // Return as 'data'
   return {data: recipe};
 }
 
