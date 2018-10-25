@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { TweenMax, CSSPlugin, TimelineMax } from 'gsap';
-import { CSSTransition, TransitionGroup, Transition } from 'react-transition-group';
 
 class Loader extends Component {
   constructor(props) {
@@ -12,18 +11,11 @@ class Loader extends Component {
   }
 
   componentDidMount() {
-    console.log('mount loader');
     this.tween1.to(this.object1, 1, {scale: 0.5})
               .to(this.object1, 1, {scale: 1});
 
     this.tween2.to(this.object2, 1, {scale: 1})
                .to(this.object2, 1, {scale: 0.5});
-  }
-
-  componentWillUnmount() {
-    console.log('unmount loader');
-    // this.tween1.to(this.object1, 1, {x: '-100%'});
-    // this.tween2.to(this.objext2, 1,{x: '-100%'}); 
   }
 
   render() {

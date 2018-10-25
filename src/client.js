@@ -18,8 +18,6 @@ delete window.__PRELOADED_STATE__;
 // Create Redux store with the preloaded state
 const store = createStore(preloadedState);
 
-console.log('-client preloadedState-', store.getState());
-
 const root = document.getElementById('root');
 const jsx = (
   <Provider store={store}>

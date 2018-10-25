@@ -5,6 +5,7 @@ export const GET_CURRENT_PAGE = 'GET_CURRENT_PAGE';
 export const REQUEST_CONTENTS = 'REQUEST_CONTENTS';
 export const RECEIVE_CONTENTS = 'RECEIVE_CONTENTS';
 export const STORE_DATA = 'STORE_DATA';
+export const ANIMATE_OVERLAY = 'ANIMATE_OVERLAY';
 
 export function initializeSession() {
   return {
@@ -17,6 +18,13 @@ export function getCurrentPage(pagePath) {
     type: GET_CURRENT_PAGE,
     payload: pagePath
   };
+}
+
+export function animateOverlay(action) {
+  return {
+    type: ANIMATE_OVERLAY,
+    payload: action
+  }
 }
 
 export function requestContents() {

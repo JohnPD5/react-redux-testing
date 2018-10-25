@@ -1,0 +1,25 @@
+.overlay__main {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  transform: translateY(-100%);
+  background: rgba(155, 233, 247, 1);
+  z-index: 1000;
+}
+
+.window {
+  width: 0%;
+}
+
+.window.left {
+  background: #ddd;
+}
+
+.window.right {
+  background: #fddd;
+}

@@ -4,7 +4,7 @@ export function currentContent(state = {}, action) {
   switch (action.type) {
     case REQUEST_CONTENTS:
       return Object.assign({}, state, {
-        isFetching: true
+        isFetching: true,
       });
 
     case RECEIVE_CONTENTS:

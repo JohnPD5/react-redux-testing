@@ -7,33 +7,7 @@ ul {
   padding: 0;
 }
 
-/* Page transition with ReactCssTransitionGroup */
-.fade-appear,
-.fade-enter {
-  opacity: 0;
-  transform: translate(100%);
-  z-index: 1;
-}
-
-.fade-appear-active,
-.fade-enter.fade-enter-active {
-  opacity: 1;
-  transform: translate(0%);
-  transition: all 300ms linear 150ms;
-}
-
-.fade-exit {
-  opacity: 1;
-  transform: translate(0%);
-}
-
-.fade-exit.fade-exit-active {
-  opacity: 0;
-  transform: translate(-100%);
-  transition: all 150ms linear;
-}
-
-.transitionGroup__wrapper {
+.main-group__wrapper {
   overflow: hidden;
   position: relative;
 }
@@ -56,6 +30,7 @@ ul {
   flex-wrap: wrap;
   justify-content: center;
   padding: 0;
+  opacity: 0;
 }
 
 .recipes-list li {
@@ -89,13 +64,14 @@ ul {
   transform: scale(0.5);
 }
 
-.overlay__main {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  background: rgba(30, 96, 107, 0.8);
+.title__portfolio {
+  opacity: 0;
+}
+
+.title__home {
+  opacity: 0;
+}
+
+.portfolio_list {
+  transform: translateX(100%);
 }

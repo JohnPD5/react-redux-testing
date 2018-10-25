@@ -1,6 +1,7 @@
 import Home from './containers/Home';
 import Portfolio from './containers/Portfolio';
 import ShowRecipe from './containers/ShowRecipe';
+import Contacts from './containers/Contacts';
 
 export default [
   {
@@ -20,5 +21,11 @@ export default [
     component: ShowRecipe,
     name: 'ShowRecipe',
     nav: false
+  },
+  {
+    path: '/contacts',
+    component: Contacts,
+    name: 'Contacts',
+    nav: true
   }
 ];

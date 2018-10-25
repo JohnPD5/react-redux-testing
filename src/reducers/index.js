@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { GET_CURRENT_PAGE, INIT_SESSION, } from '../actions/index';
+import { GET_CURRENT_PAGE, INIT_SESSION, ANIMATE_OVERLAY } from '../actions/index';
 import { currentContent } from './reducer_content';
 
 export function initSession(state = {}, action) {
@@ -23,10 +23,21 @@ export function currentPage(state = {}, action) {
   }
 }
 
+export function overlayState(state= {}, action) {
+  switch (action.type) {
+    case ANIMATE_OVERLAY:
+      return action.payload;
+
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   loggedIn: initSession,
   currentPage: currentPage,
-  contents: currentContent
+  contents: currentContent,
+  overlayState: overlayState
 });
 
 export default rootReducer;
