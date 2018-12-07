@@ -20,7 +20,7 @@ class App extends Component {
       return <Route 
               key={route.path} 
               exact 
-              path={route.path} 
+              path={route.path}
               render={(props) => {
                 return(
                   <div>

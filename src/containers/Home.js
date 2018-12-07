@@ -16,8 +16,6 @@ class Home extends Component {
     this.ul = null;
     this.title = null;
     this.tween = new TimelineMax({delay: 3.1});
-
-    console.log(props);
   }
 
   componentDidMount() {
