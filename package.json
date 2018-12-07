@@ -1,7 +1,7 @@
 {
   "name": "react-starter-kit",
   "version": "1.0.0",
-  "description": "open source universal react redux graphql boilerplate",
+  "description": "React application with Server Side Rendering",
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.server.js && webpack --config webpack.client.js",
